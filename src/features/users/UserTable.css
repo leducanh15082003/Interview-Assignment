@@ -1,0 +1,48 @@
+body {
+  font-family: "Montserrat", sans-serif;
+}
+
+table {
+  font-family: 'Montserrat', sans-serif;
+}
+
+button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button:hover {
+  background-color: #4a5568; 
+}
+
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  font-size: 1.25rem;
+  z-index: 50; 
+}
+
+.table-header, .table-cell {
+  min-width: 150px;
+}
+
+.table-header {
+  width: 200px; 
+}
+
+.table-cell-username {
+  width: 200px;
+}
+
+.table-cell-thumbnail {
+  width: 100px;
+}
+
+.table-cell img {
+  width: 40px;
+  height: auto;
+}
