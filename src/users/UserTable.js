@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUsers } from "./usersSlice";
-import "./UserTable.css";
+import "./../styles/UserTable.css";
 
 const UserTable = () => {
   const dispatch = useDispatch();
@@ -14,6 +14,8 @@ const UserTable = () => {
     key: "name",
     direction: "ascending",
   });
+
+  const totalPages = 10;
 
   useEffect(() => {
     dispatch(fetchUsers(page));
@@ -59,16 +61,20 @@ const UserTable = () => {
         <thead className="bg-gray-50">
           <tr>
             <th
-              className="table-header px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
+              className="table-header px-6 py-3 text-left text-xs tracking-wider"
               onClick={() => handleSort("name")}
             >
-              Full Name
+              <button className="cursor-pointer font-medium text-gray-500 uppercase bg-blue-500 text-white rounded-lg hover:bg-blue-700">
+                Full Name
+              </button>
             </th>
             <th
-              className="table-header px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer table-cell-username"
+              className="table-header px-6 py-3 text-left text-xs tracking-wider cursor-pointer table-cell-username"
               onClick={() => handleSort("login.username")}
             >
-              Username
+              <button className="cursor-pointer font-medium text-gray-500 uppercase bg-blue-500 text-white rounded-lg hover:bg-blue-700">
+                Username
+              </button>
             </th>
             <th className="table-header px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider table-cell-thumbnail">
               Thumbnail
@@ -102,6 +108,9 @@ const UserTable = () => {
         >
           Previous
         </button>
+        <span className="text-gray-500">
+          {page}/{totalPages}
+        </span>
         <button
           className="px-4 py-2 bg-gray-500 text-white transition-transform transform hover:scale-105"
           disabled={page === 10}
