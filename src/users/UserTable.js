@@ -1,28 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUsers } from "./usersSlice";
+import { fetchUsers, setPage } from "./usersSlice";
 import "./../styles/UserTable.css";
 
 const UserTable = () => {
   const dispatch = useDispatch();
-  const { users, status } = useSelector(state => ({
+  const { users, status, page, totalPages, error } = useSelector(state => ({
     users: state.users.users,
     status: state.users.status,
+    page: state.users.page,
+    totalPages: state.users.totalPages,
+    error: state.users.error,
   }));
-  const [page, setPage] = useState(1);
   const [sortConfig, setSortConfig] = useState({
     key: "name",
     direction: "ascending",
   });
-
-  const totalPages = 10;
 
   useEffect(() => {
     dispatch(fetchUsers(page));
   }, [dispatch, page]);
 
   const handlePageChange = newPage => {
-    setPage(newPage);
+    if (newPage >= 1 && newPage <= totalPages) {
+      dispatch(setPage(newPage));
+    }
   };
 
   const handleSort = key => {
@@ -56,6 +58,9 @@ const UserTable = () => {
     <div className="p-4">
       {status === "loading" && (
         <div className="loading-overlay">Loading...</div>
+      )}
+      {status === "failed" && (
+        <div className="error-overlay">Error loading users: {error}</div>
       )}
       <table className="min-w-full divide-y divide-gray-200">
         <thead className="bg-gray-50">
@@ -113,7 +118,7 @@ const UserTable = () => {
         </span>
         <button
           className="px-4 py-2 bg-gray-500 text-white transition-transform transform hover:scale-105"
-          disabled={page === 10}
+          disabled={page === totalPages}
           onClick={() => handlePageChange(page + 1)}
         >
           Next
